@@ -401,59 +401,47 @@
       </div>
 
       <h3 class="text-base font-extrabold text-sage-900 mb-1">Pilih atau Masukkan Akun</h3>
-      <p class="text-xs text-sage-500 mb-4">Masuk untuk melanjutkan ke portal Ruang Pintar.</p>
+      <p class="text-xs text-sage-500 mb-4">Masuk untuk melanjutkan ke portal Ruang Pintar. Akun Anda akan tersimpan permanen.</p>
 
-      <!-- Pilihan Akun Cepat -->
-      <div class="space-y-2 mb-4">
-        <button onclick="loginWithPresetGoogle('murid')" id="presetMuridBtn" class="w-full text-left p-3 rounded-2xl border border-sage-200 hover:border-mint-400 hover:bg-mint-50/40 flex items-center space-x-3 transition">
-          <div class="w-10 h-10 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-sm">
-            AF
+      <!-- Daftar Akun yang Pernah Login (Tersimpan Permanen) -->
+      <div id="savedAccountsContainer" class="hidden mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-bold text-sage-600 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-clock-rotate-left text-mint-600"></i>
+            <span>Akun Anda yang Tersimpan:</span>
+          </span>
+          <span class="text-[10px] text-sage-400">Klik untuk masuk langsung</span>
+        </div>
+        <div id="savedAccountsList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+          <!-- Rendered dynamically -->
+        </div>
+        <div class="relative my-4">
+          <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-sage-200"></div></div>
+          <div class="relative flex justify-center text-[10px] uppercase font-bold text-sage-400 bg-white px-2">
+            Atau Gunakan Akun Baru
           </div>
-          <div class="truncate flex-grow">
-            <p class="text-xs font-bold text-sage-900 truncate">Ahmad Fauzan (Pelajar)</p>
-            <p class="text-[11px] text-sage-500 truncate">ahmad.fauzan@student.sch.id</p>
-          </div>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-mint-100 text-mint-800">Pelajar</span>
-        </button>
-
-        <button onclick="loginWithPresetGoogle('guru')" id="presetGuruBtn" class="w-full text-left p-3 rounded-2xl border border-sage-200 hover:border-sage-400 hover:bg-sage-50/60 flex items-center space-x-3 transition">
-          <div class="w-10 h-10 rounded-full bg-sage-600 text-white font-bold flex items-center justify-center text-sm shadow-sm">
-            BS
-          </div>
-          <div class="truncate flex-grow">
-            <p class="text-xs font-bold text-sage-900 truncate">Budi Santoso, S.Pd (Pengajar)</p>
-            <p class="text-[11px] text-sage-500 truncate">budi.santoso@guru.sch.id</p>
-          </div>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sage-200 text-sage-800">Pengajar</span>
-        </button>
-      </div>
-
-      <div class="relative my-4">
-        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-sage-200"></div></div>
-        <div class="relative flex justify-center text-[10px] uppercase font-bold text-sage-400 bg-white px-2">
-          Atau Gunakan Identitas Sendiri
         </div>
       </div>
 
-      <!-- Form Custom Account -->
-      <form onsubmit="handleCustomGoogleLogin(event)" class="space-y-3">
+      <!-- Form Input Akun -->
+      <form onsubmit="handleCustomGoogleLogin(event)" class="space-y-4">
         <div>
-          <label class="block text-[11px] font-bold text-sage-700 uppercase tracking-wider mb-1">
+          <label class="block text-xs font-bold text-sage-700 uppercase tracking-wider mb-1.5">
             Nama Lengkap:
           </label>
-          <input type="text" id="customLoginName" required placeholder="Contoh: Sarah Az-Zahra" class="w-full bg-sage-50 border border-sage-200 rounded-xl px-3.5 py-2 text-xs text-sage-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sage-400">
+          <input type="text" id="customLoginName" required placeholder="Masukkan nama lengkap Anda..." class="w-full bg-sage-50 border border-sage-200 rounded-xl px-3.5 py-2.5 text-xs text-sage-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sage-400 transition">
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold text-sage-700 uppercase tracking-wider mb-1">
-            Alamat Gmail:
+          <label class="block text-xs font-bold text-sage-700 uppercase tracking-wider mb-1.5">
+            Alamat Email:
           </label>
-          <input type="email" id="customLoginEmail" required placeholder="Contoh: sarah.azzahra@gmail.com" class="w-full bg-sage-50 border border-sage-200 rounded-xl px-3.5 py-2 text-xs text-sage-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sage-400">
+          <input type="email" id="customLoginEmail" required placeholder="nama@email.com" class="w-full bg-sage-50 border border-sage-200 rounded-xl px-3.5 py-2.5 text-xs text-sage-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sage-400 transition">
         </div>
 
-        <button type="submit" class="w-full py-2.5 rounded-xl bg-sage-700 hover:bg-sage-800 text-white text-xs font-semibold shadow-md transition flex items-center justify-center space-x-2">
+        <button type="submit" class="w-full py-3 rounded-xl bg-sage-700 hover:bg-sage-800 text-white text-xs font-bold shadow-md transition flex items-center justify-center space-x-2">
           <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
-          <span>Masuk Sekarang</span>
+          <span id="submitLoginBtnText">Masuk Sekarang</span>
         </button>
       </form>
 
@@ -630,6 +618,39 @@
                 </tr>
               </thead>
               <tbody id="attendanceTableBody" class="divide-y divide-sage-100">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Daftar Siswa yang Pernah Login / Terdaftar Permanen -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-sage-200 shadow-card">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-sage-100">
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-lg font-bold text-sage-900">Daftar Akun Siswa Terdaftar (Terekam Permanen)</h3>
+                <span id="badgeRegisteredStudentsCount" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-mint-100 text-mint-800">
+                  0 Siswa
+                </span>
+              </div>
+              <p class="text-xs text-sage-500 mt-0.5">Seluruh akun siswa yang pernah login ke portal Ruang Pintar tersimpan secara permanen di database lokal.</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-sage-700">
+              <thead class="bg-sage-50 text-sage-500 uppercase text-[10px] tracking-wider border-b border-sage-200">
+                <tr>
+                  <th class="px-4 py-3">Nama Siswa</th>
+                  <th class="px-4 py-3">Alamat Email</th>
+                  <th class="px-4 py-3">Pertama Login</th>
+                  <th class="px-4 py-3">Login Terakhir</th>
+                  <th class="px-4 py-3 text-center">Total Login</th>
+                  <th class="px-4 py-3 text-right">Status Presensi Hari Ini</th>
+                </tr>
+              </thead>
+              <tbody id="registeredStudentsTableBody" class="divide-y divide-sage-100">
                 <!-- Rendered dynamically -->
               </tbody>
             </table>
@@ -1028,7 +1049,7 @@
                 <label class="block text-xs font-bold text-sage-700 uppercase tracking-wider mb-1.5">
                   Nama Lengkap Siswa & Kelas <span class="text-rose-500">*</span>
                 </label>
-                <input type="text" id="inputStudentName" required placeholder="Contoh: Sarah Az-Zahra (XI MIPA 1)" class="w-full bg-sage-50/60 border border-sage-200 rounded-xl px-3.5 py-2.5 text-sm text-sage-800 placeholder-sage-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition">
+                <input type="text" id="inputStudentName" required placeholder="Masukkan nama lengkap siswa & kelas..." class="w-full bg-sage-50/60 border border-sage-200 rounded-xl px-3.5 py-2.5 text-sm text-sage-800 placeholder-sage-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition">
               </div>
 
               <div>
@@ -1125,7 +1146,7 @@
         </div>
         <h3 class="text-base font-extrabold text-sage-900">Penilaian Tugas / Quiz Siswa</h3>
       </div>
-      <p id="gradeModalSubInfo" class="text-xs text-sage-500 mb-4">Siswa: Ahmad Fauzan &bull; Matematika</p>
+      <p id="gradeModalSubInfo" class="text-xs text-sage-500 mb-4">Informasi Siswa & Tugas</p>
 
       <form onsubmit="handleSaveGrade(event)" class="space-y-4">
         <input type="hidden" id="gradeSubmissionId">
@@ -1306,7 +1327,7 @@
   <!-- ======================================================== -->
   <script>
     /* ==========================================================
-       STORAGE KEYS & STATE (SEMUA DATA KOSONGAN SAAT AWAL)
+       STORAGE KEYS & STATE (SEMUA DATA TERSIMPAN PERMANEN)
        ========================================================== */
     const STORAGE_KEY_ASSIGNMENTS = 'ruangpintar_assignments_clean';
     const STORAGE_KEY_SUBMISSIONS = 'ruangpintar_submissions_clean';
@@ -1314,6 +1335,8 @@
     const STORAGE_KEY_USER = 'ruangpintar_google_user';
     const STORAGE_KEY_QUIZZES = 'ruangpintar_quizzes_clean';
     const STORAGE_KEY_QUIZ_RESULTS = 'ruangpintar_quiz_results_clean';
+    const STORAGE_KEY_REGISTERED_USERS = 'ruangpintar_registered_users';
+    const STORAGE_KEY_LOGIN_LOGS = 'ruangpintar_login_history';
 
     // State Data
     let assignments = [];
@@ -1321,6 +1344,8 @@
     let attendances = [];
     let quizzes = [];
     let quizResults = [];
+    let registeredUsers = [];
+    let loginLogs = [];
     let currentUser = null; // { name, email, avatar, role: 'guru' | 'murid' }
     let selectedLoginRole = 'murid'; // Default role terpilih saat di gateway login ('murid' / 'guru')
     let currentGuruTab = 'tugasMasuk'; // 'tugasMasuk' | 'presensi' | 'nilaiQuiz' | 'buatMateri' | 'kantongQuiz'
@@ -1337,23 +1362,35 @@
     let activeModalAssignment = null;
 
     /* ==========================================================
-       INITIALIZATION
+       INITIALIZATION & STORAGE PERSISTENCE
        ========================================================== */
+    function loadFromStorage() {
+      try {
+        const storedAssignments = localStorage.getItem(STORAGE_KEY_ASSIGNMENTS);
+        const storedSubmissions = localStorage.getItem(STORAGE_KEY_SUBMISSIONS);
+        const storedAttendances = localStorage.getItem(STORAGE_KEY_ATTENDANCE);
+        const storedQuizzes = localStorage.getItem(STORAGE_KEY_QUIZZES);
+        const storedQuizResults = localStorage.getItem(STORAGE_KEY_QUIZ_RESULTS);
+        const storedUsers = localStorage.getItem(STORAGE_KEY_REGISTERED_USERS);
+        const storedLogs = localStorage.getItem(STORAGE_KEY_LOGIN_LOGS);
+
+        if (storedAssignments) assignments = JSON.parse(storedAssignments);
+        if (storedSubmissions) submissions = JSON.parse(storedSubmissions);
+        if (storedAttendances) attendances = JSON.parse(storedAttendances);
+        if (storedQuizzes) quizzes = JSON.parse(storedQuizzes);
+        if (storedQuizResults) quizResults = JSON.parse(storedQuizResults);
+        if (storedUsers) registeredUsers = JSON.parse(storedUsers);
+        if (storedLogs) loginLogs = JSON.parse(storedLogs);
+      } catch (err) {
+        console.error('Error loading data from storage:', err);
+      }
+    }
+
     function init() {
-      // Load assignments, submissions & attendances (kosongan jika belum ada)
-      const storedAssignments = localStorage.getItem(STORAGE_KEY_ASSIGNMENTS);
-      const storedSubmissions = localStorage.getItem(STORAGE_KEY_SUBMISSIONS);
-      const storedAttendances = localStorage.getItem(STORAGE_KEY_ATTENDANCE);
+      // Muat seluruh data permanen dari localStorage
+      loadFromStorage();
+
       const storedUser = localStorage.getItem(STORAGE_KEY_USER);
-      const storedQuizzes = localStorage.getItem(STORAGE_KEY_QUIZZES);
-      const storedQuizResults = localStorage.getItem(STORAGE_KEY_QUIZ_RESULTS);
-
-      assignments = storedAssignments ? JSON.parse(storedAssignments) : [];
-      submissions = storedSubmissions ? JSON.parse(storedSubmissions) : [];
-      attendances = storedAttendances ? JSON.parse(storedAttendances) : [];
-      quizzes = storedQuizzes ? JSON.parse(storedQuizzes) : [];
-      quizResults = storedQuizResults ? JSON.parse(storedQuizResults) : [];
-
       if (storedUser) {
         try {
           currentUser = JSON.parse(storedUser);
@@ -1363,6 +1400,12 @@
       }
 
       displayDate();
+
+      // Sinkronisasi data antar-tab secara real-time
+      window.addEventListener('storage', () => {
+        loadFromStorage();
+        refreshAllViews();
+      });
 
       // Set default deadline date for teacher form to 3 days ahead
       const nextDays = new Date();
@@ -1383,19 +1426,67 @@
       } else {
         // No session: show landing page (login gateway stays hidden)
         document.getElementById('loginGateway').classList.add('hidden');
-        // Landing page is visible by default (not hidden in HTML)
       }
     }
 
     function saveAll() {
-      localStorage.setItem(STORAGE_KEY_ASSIGNMENTS, JSON.stringify(assignments));
-      localStorage.setItem(STORAGE_KEY_SUBMISSIONS, JSON.stringify(submissions));
-      localStorage.setItem(STORAGE_KEY_ATTENDANCE, JSON.stringify(attendances));
-      localStorage.setItem(STORAGE_KEY_QUIZZES, JSON.stringify(quizzes));
-      localStorage.setItem(STORAGE_KEY_QUIZ_RESULTS, JSON.stringify(quizResults));
-      if (currentUser) {
-        localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(currentUser));
+      try {
+        localStorage.setItem(STORAGE_KEY_ASSIGNMENTS, JSON.stringify(assignments));
+        localStorage.setItem(STORAGE_KEY_SUBMISSIONS, JSON.stringify(submissions));
+        localStorage.setItem(STORAGE_KEY_ATTENDANCE, JSON.stringify(attendances));
+        localStorage.setItem(STORAGE_KEY_QUIZZES, JSON.stringify(quizzes));
+        localStorage.setItem(STORAGE_KEY_QUIZ_RESULTS, JSON.stringify(quizResults));
+        localStorage.setItem(STORAGE_KEY_REGISTERED_USERS, JSON.stringify(registeredUsers));
+        localStorage.setItem(STORAGE_KEY_LOGIN_LOGS, JSON.stringify(loginLogs));
+        if (currentUser) {
+          localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(currentUser));
+        }
+      } catch (err) {
+        console.error('Error saving data to storage:', err);
       }
+    }
+
+    /* Rekam akun login Guru dan Murid secara permanen */
+    function recordUserLogin(user) {
+      if (!user || !user.email) return;
+
+      loadFromStorage();
+
+      const now = new Date();
+      const nowStr = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' +
+                     now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+      // Catat ke daftar akun terdaftar (Registered Users)
+      const existingIdx = registeredUsers.findIndex(u => u.email.toLowerCase() === user.email.toLowerCase());
+      if (existingIdx !== -1) {
+        registeredUsers[existingIdx].name = user.name;
+        registeredUsers[existingIdx].role = user.role;
+        registeredUsers[existingIdx].avatar = user.avatar;
+        registeredUsers[existingIdx].lastLogin = nowStr;
+        registeredUsers[existingIdx].loginCount = (registeredUsers[existingIdx].loginCount || 1) + 1;
+      } else {
+        registeredUsers.unshift({
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          avatar: user.avatar,
+          firstLogin: nowStr,
+          lastLogin: nowStr,
+          loginCount: 1
+        });
+      }
+
+      // Catat ke riwayat log login
+      loginLogs.unshift({
+        id: 'log-' + Date.now(),
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        timestamp: nowStr
+      });
+      if (loginLogs.length > 50) loginLogs = loginLogs.slice(0, 50);
+
+      saveAll();
     }
 
     function displayDate() {
@@ -1437,43 +1528,81 @@
       }
     }
 
-    function openGoogleAuthModal() {
-      const presetMuridBtn = document.getElementById('presetMuridBtn');
-      const presetGuruBtn = document.getElementById('presetGuruBtn');
+    function renderSavedAccountsModal() {
+      const container = document.getElementById('savedAccountsContainer');
+      const list = document.getElementById('savedAccountsList');
+      if (!container || !list) return;
 
-      if (selectedLoginRole === 'murid') {
-        presetMuridBtn.classList.add('ring-2', 'ring-mint-500');
-        presetGuruBtn.classList.remove('ring-2', 'ring-sage-600');
-      } else {
-        presetGuruBtn.classList.add('ring-2', 'ring-sage-600');
-        presetMuridBtn.classList.remove('ring-2', 'ring-mint-500');
+      loadFromStorage();
+
+      // Filter akun yang cocok dengan peran yang sedang dipilih (Guru atau Murid)
+      const filtered = registeredUsers.filter(u => u.role === selectedLoginRole);
+
+      if (filtered.length === 0) {
+        container.classList.add('hidden');
+        return;
       }
 
+      container.classList.remove('hidden');
+      list.innerHTML = filtered.map(u => `
+        <div class="flex items-center justify-between p-2.5 rounded-xl border border-sage-200 bg-sage-50/70 hover:bg-mint-50/60 hover:border-mint-400 transition cursor-pointer" onclick="loginWithSavedAccount('${escapeHtml(u.email)}')">
+          <div class="flex items-center space-x-2.5 min-w-0">
+            <div class="w-8 h-8 rounded-full ${u.role === 'guru' ? 'bg-sage-600' : 'bg-emerald-600'} text-white font-bold text-xs flex items-center justify-center shrink-0">
+              ${escapeHtml(u.avatar || u.name.substring(0, 2).toUpperCase())}
+            </div>
+            <div class="truncate">
+              <p class="text-xs font-bold text-sage-900 truncate">${escapeHtml(u.name)}</p>
+              <p class="text-[10px] text-sage-500 truncate">${escapeHtml(u.email)} &bull; Login terakhir: ${u.lastLogin || '-'}</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-1 shrink-0 ml-2">
+            <button type="button" class="px-2.5 py-1 rounded-lg bg-white border border-sage-200 hover:bg-mint-600 hover:text-white hover:border-mint-600 text-[11px] font-semibold text-sage-700 transition">
+              Masuk &rarr;
+            </button>
+            <button type="button" onclick="deleteSavedAccount(event, '${escapeHtml(u.email)}')" class="w-7 h-7 rounded-lg hover:bg-rose-100 text-sage-400 hover:text-rose-600 flex items-center justify-center transition" title="Hapus dari daftar tersimpan">
+              <i class="fa-solid fa-trash-can text-[10px]"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loginWithSavedAccount(email) {
+      loadFromStorage();
+      const u = registeredUsers.find(acc => acc.email.toLowerCase() === email.toLowerCase());
+      if (!u) return;
+
+      currentUser = {
+        name: u.name,
+        email: u.email,
+        role: u.role,
+        avatar: u.avatar || u.name.substring(0, 2).toUpperCase()
+      };
+
+      recordUserLogin(currentUser);
+      completeLoginSuccess();
+    }
+
+    function deleteSavedAccount(event, email) {
+      event.stopPropagation();
+      if (!confirm('Hapus akun ini dari daftar perangkat? (Data tugas dan nilai siswa tetap tersimpan)')) return;
+      registeredUsers = registeredUsers.filter(u => u.email.toLowerCase() !== email.toLowerCase());
+      saveAll();
+      renderSavedAccountsModal();
+      showToast('Akun dihapus dari daftar tersimpan.', 'info');
+    }
+
+    function openGoogleAuthModal() {
+      const submitText = document.getElementById('submitLoginBtnText');
+      if (submitText) {
+        submitText.innerText = selectedLoginRole === 'guru' ? 'Masuk sebagai Pengajar (Guru)' : 'Masuk sebagai Pelajar (Murid)';
+      }
+      renderSavedAccountsModal();
       document.getElementById('googleAuthModal').classList.remove('hidden');
     }
 
     function closeGoogleAuthModal() {
       document.getElementById('googleAuthModal').classList.add('hidden');
-    }
-
-    function loginWithPresetGoogle(role) {
-      if (role === 'murid') {
-        currentUser = {
-          name: 'Ahmad Fauzan',
-          email: 'ahmad.fauzan@student.sch.id',
-          role: 'murid',
-          avatar: 'AF'
-        };
-      } else {
-        currentUser = {
-          name: 'Budi Santoso, S.Pd',
-          email: 'budi.santoso@guru.sch.id',
-          role: 'guru',
-          avatar: 'BS'
-        };
-      }
-
-      completeLoginSuccess();
     }
 
     function handleCustomGoogleLogin(event) {
@@ -1492,10 +1621,18 @@
         avatar: initials
       };
 
+      // Rekam akun secara permanen di storage
+      recordUserLogin(currentUser);
+
+      // Bersihkan input form
+      document.getElementById('customLoginName').value = '';
+      document.getElementById('customLoginEmail').value = '';
+
       completeLoginSuccess();
     }
 
     function completeLoginSuccess() {
+      loadFromStorage();
       saveAll();
       closeGoogleAuthModal();
       hideLoginGateway();
@@ -1534,10 +1671,12 @@
     }
 
     function handleLogout() {
-      if (confirm('Apakah Anda ingin keluar dari sesi akun ini?')) {
+      if (confirm('Apakah Anda ingin keluar dari sesi akun ini? (Data tugas, kuis, dan akun Anda tetap tersimpan aman di browser)')) {
         currentUser = null;
         localStorage.removeItem(STORAGE_KEY_USER);
-        // Show landing page on logout
+        // Pastikan seluruh data tugas, quiz, akun tetap tersimpan
+        loadFromStorage();
+
         const landing = document.getElementById('landingPage');
         if (landing) {
           landing.classList.remove('hidden');
@@ -1545,7 +1684,7 @@
         } else {
           showLoginGateway();
         }
-        showToast('Anda telah berhasil keluar.', 'info');
+        showToast('Anda telah keluar. Seluruh data tugas, quiz, dan akun Anda tetap tersimpan aman.', 'info');
       }
     }
 
@@ -1681,6 +1820,7 @@
       renderGuruTasks();
       renderSubmissionsInbox();
       renderAttendanceTable();
+      renderRegisteredStudentsTable();
       renderGradesTable();
       renderMuridChecklist();
       renderSharedFiles();
@@ -1933,6 +2073,57 @@
         refreshAllViews();
         showToast('Data presensi dihapus.', 'info');
       }
+    }
+
+    /* ==========================================================
+       GURU: DAFTAR AKUN SISWA TERDAFTAR (PERMANEN)
+       ========================================================== */
+    function renderRegisteredStudentsTable() {
+      const tbody = document.getElementById('registeredStudentsTableBody');
+      const badge = document.getElementById('badgeRegisteredStudentsCount');
+      if (!tbody) return;
+
+      const students = registeredUsers.filter(u => u.role === 'murid');
+      if (badge) badge.innerText = `${students.length} Siswa`;
+
+      if (students.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center py-8 text-sage-400 italic">
+              Belum ada akun siswa yang login / terdaftar. Setiap murid yang login akan otomatis terekam permanen di sini.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      const today = getTodayDateString();
+
+      tbody.innerHTML = students.map(s => {
+        const att = attendances.find(a => a.studentName.toLowerCase() === s.name.toLowerCase() && a.date === today);
+        let presensiBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-sage-100 text-sage-600">Belum Presensi</span>';
+        if (att) {
+          if (att.status === 'Hadir') presensiBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Hadir</span>';
+          else if (att.status === 'Izin') presensiBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Izin</span>';
+          else if (att.status === 'Sakit') presensiBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800">Sakit</span>';
+        }
+
+        return `
+          <tr class="hover:bg-sage-50/60 transition">
+            <td class="px-4 py-3 font-bold text-sage-800 flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0">
+                ${escapeHtml(s.avatar || s.name.substring(0, 2).toUpperCase())}
+              </div>
+              <span>${escapeHtml(s.name)}</span>
+            </td>
+            <td class="px-4 py-3 text-sage-600">${escapeHtml(s.email)}</td>
+            <td class="px-4 py-3 text-sage-500">${escapeHtml(s.firstLogin || '-')}</td>
+            <td class="px-4 py-3 text-sage-500">${escapeHtml(s.lastLogin || '-')}</td>
+            <td class="px-4 py-3 text-center font-bold text-sage-700">${s.loginCount || 1}x</td>
+            <td class="px-4 py-3 text-right">${presensiBadge}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
     /* ==========================================================
